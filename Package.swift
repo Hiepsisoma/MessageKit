@@ -29,7 +29,7 @@ let package = Package(
         .library(name: "MessageKit", targets: ["MessageKit"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Hiepsisoma/InputBarAccessoryView", revision: "ff1be8af3b7b2b323b68a60aeb4ed684101507a4"),
+        .package(url: "https://github.com/Hiepsisoma/InputBarAccessoryView", revision: "7f43bc7f6ef84c99a4f92c6294607e481f97ec2b"),
     ],
     targets: [
         // MARK: - MessageKit

@@ -62,10 +62,10 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
 
-    MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
-      .onNewMessage { [weak self] message in
-        self?.insertMessage(message)
-      }
+//    MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
+//      .onNewMessage { [weak self] message in
+//        self?.insertMessage(message)
+//      }
   }
 
   override func viewDidDisappear(_ animated: Bool) {
@@ -89,15 +89,15 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 
   @objc
   func loadMoreMessages() {
-    DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
-      SampleData.shared.getMessages(count: 20) { messages in
-        DispatchQueue.main.async {
-          self.messageList.insert(contentsOf: messages, at: 0)
-          self.messagesCollectionView.reloadDataAndKeepOffset()
-          self.refreshControl.endRefreshing()
-        }
-      }
-    }
+//    DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
+//      SampleData.shared.getMessages(count: 20) { messages in
+//        DispatchQueue.main.async {
+//          self.messageList.insert(contentsOf: messages, at: 0)
+//          self.messagesCollectionView.reloadDataAndKeepOffset()
+//          self.refreshControl.endRefreshing()
+//        }
+//      }
+//    }
   }
 
   func configureMessageCollectionView() {

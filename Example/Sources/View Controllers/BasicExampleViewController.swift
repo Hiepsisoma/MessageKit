@@ -151,19 +151,29 @@ extension BasicExampleViewController: MessagesDisplayDelegate {
 // MARK: MessagesLayoutDelegate
 
 extension BasicExampleViewController: MessagesLayoutDelegate {
-  func cellTopLabelHeight(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CGFloat {
-    18
-  }
-
-  func cellBottomLabelHeight(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CGFloat {
-    17
-  }
-
-  func messageTopLabelHeight(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CGFloat {
-    20
-  }
-
-  func messageBottomLabelHeight(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CGFloat {
-    16
-  }
+    func cellTopLabelHeight(for _: MessageType, at indexPath : IndexPath, in _: MessagesCollectionView) -> CGFloat {
+        if indexPath.section % 3 == 0 {
+            18
+        } else {
+            0
+        }
+    }
+    
+    func cellBottomLabelHeight(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CGFloat {
+        0
+    }
+    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in _: MessagesCollectionView) -> CGFloat {
+        // TODO: - Hien thi ten user bong bong chat
+        if isFromCurrentSender(message: message) {
+            //            return !isPreviousMessageSameSender(at: indexPath) ? 20 : 0
+            return 8.0
+        } else {
+            //            return !isPreviousMessageSameSender(at: indexPath) ? (20 + outgoingAvatarOverlap) : 0
+            return 0.0
+        }
+    }
+    
+    func messageBottomLabelHeight(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CGFloat {
+        0
+    }
 }

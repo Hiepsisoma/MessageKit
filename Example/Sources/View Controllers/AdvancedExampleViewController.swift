@@ -158,7 +158,7 @@ final class AdvancedExampleViewController: ChatViewController {
       UIColor.primaryColor.withAlphaComponent(0.3),
       for: .highlighted)
 
-    messageInputBar.isTranslucent = true
+//    messageInputBar.isTranslucent = true
     messageInputBar.separatorLine.isHidden = true
     messageInputBar.inputTextView.tintColor = .primaryColor
     messageInputBar.inputTextView.backgroundColor = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1)
