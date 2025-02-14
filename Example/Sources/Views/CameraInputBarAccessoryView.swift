@@ -41,43 +41,83 @@ class CameraInputBarAccessoryView: InputBarAccessoryView {
     return manager
   }()
 
-  func configure() {
-    let camera = makeButton(named: "ic_camera")
-    camera.tintColor = .darkGray
-    camera.onTouchUpInside { [weak self] _ in
-      self?.showImagePickerControllerActionSheet()
+    func configure() {
+        inputTextView.placeholderTextColor = .init(hex: "#81838A")
+        separatorLine.isHidden = true
+        let items = [
+            makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
+                button.isEnabled = textView.text.isEmpty
+                }.onSelected {
+                    $0.tintColor = .systemBlue
+            },
+            makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
+                button.isEnabled = textView.text.isEmpty
+                }.onSelected {
+                    $0.tintColor = .systemBlue
+                },
+            sendButton.onSelected {
+                    $0.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                }.onDeselected {
+                    $0.transform = CGAffineTransform.identity
+            }
+        ]
+        setStackViewItems(items, forStack: .right, animated: false)
+        rightStackView.alignment = .center
+        
+        let itemsTop = [
+            makeViewButton(named: "Outfits").onTextViewDidChange { button, textView in
+                button.isEnabled = textView.text.isEmpty
+                }.onSelected {
+                    $0.tintColor = .systemBlue
+            },
+            makeViewButton(named: "Actions").onTextViewDidChange { button, textView in
+                button.isEnabled = textView.text.isEmpty
+                }.onSelected {
+                    $0.tintColor = .systemBlue
+            },
+        ]
+        setStackViewItems(itemsTop, forStack: .top, animated: false)
+        topStackView.alignment = .center
+        padding = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+        topStackView.axis = .horizontal
     }
-    setLeftStackViewWidthConstant(to: 35, animated: true)
-    setStackViewItems([camera], forStack: .left, animated: false)
-    inputPlugins = [attachmentManager]
-  }
-
-  override func didSelectSendButton() {
-    if attachmentManager.attachments.count > 0 {
-      (delegate as? CameraInputBarAccessoryViewDelegate)?
-        .inputBar(self, didPressSendButtonWith: attachmentManager.attachments)
+    private func makeButton(named: String) -> InputBarButtonItem {
+        let inputBarButtonItem =   InputBarButtonItem()
+            .configure {
+                $0.spacing = .fixed(0)
+                $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
+                $0.setSize(CGSize(width: 24, height: 24), animated: false)
+            }.onSelected {
+                $0.tintColor = .systemBlue
+            }.onDeselected {
+                $0.tintColor = UIColor.lightGray
+            }.onTouchUpInside { _ in
+                print("Item Tapped")
+        }
+        inputBarButtonItem.inputBarAccessoryView?.shouldManageSendButtonEnabledState = false
+        return inputBarButtonItem
     }
-    else {
-      delegate?.inputBar(self, didPressSendButtonWith: inputTextView.text)
+    
+    private func makeViewButton(named: String) -> InputBarViewButton {
+        let inputBarViewButton =  InputBarViewButton()
+            .configure {
+                $0.spacing = .fixed(0)
+//                $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
+//                $0.setSize(CGSize(width: 94, height: 32), animated: false)
+            }.onSelected {
+                $0.tintColor = .systemBlue
+            }.onDeselected {
+                $0.tintColor = UIColor.lightGray
+            }.onTouchUpInside { _ in
+                print("HungPT Item Tapped")
+            }
+        inputBarViewButton.customImageView.image =  UIImage(named: "ic_appstore")
+        inputBarViewButton.customLabel.text =  named
+        inputBarViewButton.contentView.backgroundColor = .red
+        inputBarViewButton.contentView.layer.cornerRadius = 16
+        inputBarViewButton.inputBarAccessoryView?.shouldManageSendButtonEnabledState = false
+        return inputBarViewButton
     }
-  }
-
-  // MARK: Private
-
-  private func makeButton(named _: String) -> InputBarButtonItem {
-    InputBarButtonItem()
-      .configure {
-        $0.spacing = .fixed(10)
-        $0.image = UIImage(systemName: "camera.fill")?.withRenderingMode(.alwaysTemplate)
-        $0.setSize(CGSize(width: 30, height: 30), animated: false)
-      }.onSelected {
-        $0.tintColor = .systemBlue
-      }.onDeselected {
-        $0.tintColor = UIColor.lightGray
-      }.onTouchUpInside { _ in
-        print("Item Tapped")
-      }
-  }
 }
 
 // MARK: UIImagePickerControllerDelegate, UINavigationControllerDelegate
