@@ -235,13 +235,6 @@ final class AdvancedExampleViewController: ChatViewController {
   // MARK: Private
 
   private func configureInputBarItems() {
-    messageInputBar.setRightStackViewWidthConstant(to: 36, animated: false)
-    messageInputBar.sendButton.imageView?.backgroundColor = UIColor(white: 0.85, alpha: 1)
-    messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-    messageInputBar.sendButton.setSize(CGSize(width: 36, height: 36), animated: false)
-    messageInputBar.sendButton.image = #imageLiteral(resourceName: "ic_up")
-    messageInputBar.sendButton.title = nil
-    messageInputBar.sendButton.imageView?.layer.cornerRadius = 16
     let charCountButton = InputBarButtonItem()
       .configure {
         $0.title = "0/140"
@@ -261,8 +254,6 @@ final class AdvancedExampleViewController: ChatViewController {
         item.setTitleColor(color, for: .normal)
       }
     let bottomItems = [.flexibleSpace, charCountButton]
-
-    configureInputBarPadding()
 
     messageInputBar.setStackViewItems(bottomItems, forStack: .bottom, animated: false)
 
